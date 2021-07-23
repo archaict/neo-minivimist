@@ -25,7 +25,7 @@ codex.core = { -- [ Core configuration defaults ] --------
 ----------------------------------------------------------
 
 -- [ Themes ] --------------------------------------------
-  colorscheme = "ayu-core",     -- your colorscheme
+  colorscheme = "ayu",     -- your colorscheme
   dark_theme = true,            -- enable dark_mode
 ----------------------------------------------------------
 
