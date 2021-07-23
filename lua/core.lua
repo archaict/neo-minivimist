@@ -126,6 +126,8 @@ codex.core = { -- [ Core configuration defaults ] --------
   -- [ Keymaps ]
   -- Some keymaps are annoying o binds, especially those
   -- leader key, there're multiple fixme in here! #FIXME
+  -- if you also notice, there's no codex prefixes here,
+  -- this idea is taken from nvim_like_me. Check them out!
 
 Keymaps = { ----------------------------------------------
 
@@ -151,12 +153,15 @@ Keymaps = { ----------------------------------------------
 codex.modules = { ----------------------------------------
 
   -- [ Netrw ]
-  --
-  netrw = true;                -- Netrw vim plugins
+  -- Since this one is builtins, why not use this one?
+  -- disable this if you want to use NerdTree or NvimTree.
+  netrw = true;
+
   -- [ Tpope Plugins]
   -- I only use some that I used daily, you might want to
-  -- add more depending on your usage!
-  tpope = true;                -- Complete vim Experiences
+  -- add more depending on your usage. Complete-ing
+  -- your vim experiences!
+  tpope = true;
 } --------------------------------------- [ MD ] ---------
 
 return codex
