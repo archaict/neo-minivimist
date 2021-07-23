@@ -1,31 +1,38 @@
--- core.lua -- [ setting up local variables ] -----
+-- core.lua -- [ setting up local variables ] ------------
+-- This file is polluted with many functions, for
+-- more info, you can check configuration.lua, it
+-- is basically same, but this file is used for
+-- options. If you want to remove this one, you
+-- can delete the codex.core part in [ core.lua ]!
+----------------------------------------------------------
 local g = vim.g -- global variables
 local o = vim.o -- global options
 local b = vim.bo -- buffer -scoped options
 local w = vim.wo -- windows-scoped options
 local cmd = vim.cmd -- execute Vim commands
 CACHE = vim.fn.stdpath "cache"
----------------------------------------------------
+---------------------------------------------------------
 local config = require("core")
 
--- [ Initialize ] --------------------------------
+-- FIXME : Recategorize or do something about this mess.
+
+-- [ Initialize ] ---------------------------------------
 if config.core.init then
-    o.fileencoding = "utf-8" -- defaults for encoding
+    o.fileencoding = "utf-8"       -- defaults for encoding
     o.fileformats = "unix,dos,mac" -- supported file formats
     o.nrformats = "octal"
-    o.backspace = "indent,eol,start"
+    o.backspace = "indent,eol,start" -- the originial BS!
 end
----------------------------------------------------
+----------------------------------------------------------
 
 if config.core.mouse then
     o.mouse = "a" -- enable mouse support
 end
 
--- [ User Interfaces ] ----------------------------
+-- [ User Interfaces ] -----------------------------------
 if config.core.colorscheme then
     o.termguicolors = true -- set those colors on your terminal
     g.colors_name = config.core.colorscheme
-    cmd("autocmd TermOpen * setlocal nonumber norelativenumber") -- no nonsense
 end
 
 if config.core.dark_theme then
@@ -85,9 +92,9 @@ if config.core.bettersplits then
     o.splitbelow = true -- horizontal split to the bottom
     o.splitright = true -- vertical split to the right
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.indentation then
     o.autoindent = true -- enable autoindent
     o.smartindent = true -- smarter indentation
@@ -130,9 +137,9 @@ if config.core.highlights then
     o.showmatch = true -- highlight matching parenthesis
     o.smartcase = true -- ignore lowercase for the whole pattern
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if not config.core.swap then
     b.swapfile = false -- don't use swapfile
 else
@@ -143,39 +150,46 @@ if config.core.undo then
     o.undofile = true -- enable undo file support
     o.undodir = config.core.undodir -- move undodir
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.hide_buffers_on_change then
     o.hidden = true -- keep buffers hidden on change
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.system_clipboard then
     o.clipboard = "unnamedplus" -- copy/paste to system clipboard
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.shortmess then
     o.shortmess = "c"
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.setup_terminal then
     o.shell = "/bin/zsh" -- default shell terminal
     o.ttimeout = true
     o.ttimeoutlen = 50
 end
+if not config.core.terminal_number then
+    -- This one is to set no number on terminal
+    cmd("autocmd TermOpen * setlocal nonumber norelativenumber")
+  else
+    -- Do you think so?
+    cmd("autocmd TermOpen * setlocal number")
+end
 
 if config.core.smart_terminal then
     cmd("au! BufWinEnter,WinEnter term://* startinsert") -- auto INSERT mode in terminal
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.show_command then
     o.showcmd = true
 end
@@ -183,9 +197,9 @@ end
 if config.core.show_mode then
     o.showmode = false -- those --INSERT-- on cmd
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.sidescrolloff >= 0 then
     o.sidescrolloff = config.core.sidescrolloff
 end
@@ -195,13 +209,13 @@ if not config.core.wrap then
 else
     w.wrap = true -- wrap text around frame
 end
----------------------------------------------------
+----------------------------------------------------------
 
----------------------------------------------------
+----------------------------------------------------------
 if config.core.scrolloff then
     o.scrolloff = config.core.scrolloff -- add 'padding' on vertical scroll
 end
----------------------------------------------------
+----------------------------------------------------------
 
 if config.core.history > 0 then
     o.history = config.core.history
