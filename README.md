@@ -1,6 +1,6 @@
 # NEO-MINIVIMIST
 
-<center>Minimal and beautiful Neovim config!</center>
+**Minimal and beautiful Neovim config!**
 
 This is an opinionated config/dotfiles for neovim beginners. Since Neovim is
 migrating most of its configuration bases to lua, you might also wanna see some
