@@ -86,10 +86,10 @@ function K.shifting()
 end
 
 function K.tabs()
-
+  -- Move between tabs, check your wm first!
   map ( 'n', '<A-left>' , ':tabprevious<CR>' )
   map ( 'n', '<A-right>' , ':tabnext<CR>' )
-
+  -- Moving through like tiling wm
   map ( 'n', '<c-t>' , ':tabnew<CR>' )
   map ( 'n', '<c-q>' , ':tabclose<CR>' )
   map ( 'n', '<A-1>' , ':tabfirst<CR>' )
@@ -101,7 +101,7 @@ function K.tabs()
   map ( 'n', '<A-7>' , '7gt' )
   map ( 'n', '<A-8>' , '8gt' )
   map ( 'n', '<A-9>' , ":tablast<CR>"  )
-
+  -- Same but from terminal
   map ( 't', '<A-1>' , '<C-\\><C-n>:tabfirst<CR>' )
   map ( 't', '<A-2>' , '<C-\\><C-n>2gt' )
   map ( 't', '<A-3>' , '<C-\\><C-n>3gt' )
@@ -112,7 +112,7 @@ function K.tabs()
   map ( 't', '<A-8>' , '<C-\\><C-n>8gt' )
   map ( 't', '<A-9>' , '<C-\\><C-n>:tablast<CR>' )
   map ( 't', '<C-Esc>', '<C-\\><C-n>' )
-
+  -- Same but from insert mode
   map ( 'i', '<A-1>' , '<C-\\><C-n>:tabfirst<CR>' )
   map ( 'i', '<A-2>' , '<C-\\><C-n>2gt' )
   map ( 'i', '<A-3>' , '<C-\\><C-n>3gt' )
@@ -126,13 +126,15 @@ function K.tabs()
 end
 
 function K.buffers()
-  map ( 'n', '<BS>'       , ':bprevious<cr>' )
-  map ( 'n', '<C-l>'      , ':bnext<cr>' )
+  -- map ( 'n', '<BS>'       , ':bprevious<cr>' )
+  -- map ( 'n', '<C-l>'      , ':bnext<cr>' )
+  -- Move to next buffer
   map ( 'n', '<C-e><C-n>' , ':bnext<cr>' )
   map ( 'n', '<C-e><C-p>' , ':bprevious<cr>' )
+  -- Delete ( preserve layout ) or kill it!
   map ( 'n', '<leader>bd' , ':silent! bp|bd#<cr>')
   map ( 'n', '<leader>bk' , ':silent bd!<CR>' , opts )
-  -- Buffer navgation
+  -- Buffer navigation, switch like tiling wm
   map ( 'n', '<leader>jj' , ':silent! bnext<cr>')
   map ( 'n', '<leader>kk' , ':silent! bprev<cr>')
 end
