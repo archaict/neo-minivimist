@@ -17,6 +17,8 @@ project has done much to help me with understanding how lua works, especially
 their codebase. You might find some resemblance to these project, since those are
 turned into a minimal neovim config (not super minimal, but okayish).
 
+**NOTE:** your config is inside lua folder, named **core.lua** remember that!
+
 `Maxivimist` version will be published at later date once it completes.
 
 ## Installation
@@ -52,6 +54,7 @@ There are three core folders ( inspired by
 [doom-nvim](https://github.com/NTBBloodbath/doom-nvim)! )
 that resides inside `lua` directory.
 
+- **lua/core.lua** is your primary **config** file!
 - **core** consists of base configuration
 - **modules** where the core plugins resides
 - **utils** the utility command, taken from
