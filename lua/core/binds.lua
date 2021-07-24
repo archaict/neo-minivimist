@@ -172,8 +172,8 @@ end
 
 function K.window()
   -- Horizontal Resize
-  map ( 'n', '<A-+>' ,'resize -5<CR>' )
-  map ( 'n', '<A-_>' ,'resize +5<CR>' )
+  map ( 'n', '<A-+>' ,':resize -5<CR>' )
+  map ( 'n', '<A-_>' ,':resize +5<CR>' )
 
   -- Vertical Resize
   map ( 'n', '<A-=>',':vertical resize -5<CR>' )

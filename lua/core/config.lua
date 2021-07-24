@@ -105,7 +105,6 @@ if config.core.tabline_colorize then
 
 end
 
-
 if config.core.cursorline then
     o.cursorline = true -- highlight the cursorline
     cmd("au ColorScheme * hi CursorLine " .. config.core.cursorline_color)
@@ -348,7 +347,7 @@ if config.core.transparency then
   cmd "au ColorScheme * hi SignColumn  ctermbg=NONE guibg=NONE"
   cmd "au ColorScheme * hi NormalNC    ctermbg=NONE guibg=NONE"
   cmd "au ColorScheme * hi MsgArea     ctermbg=NONE guibg=NONE"
-  cmd "au ColorScheme * hi EndOfBuffer ctermbg=NONE guibg=NONE ctermfg=black guifg=black"
+  cmd "au ColorScheme * hi EndOfBuffer ctermbg=NONE guibg=NONE ctermfg=black guifg=#404040"
 
   cmd "let &fcs='eob:  '"
 end
