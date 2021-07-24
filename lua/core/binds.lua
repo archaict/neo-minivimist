@@ -166,8 +166,10 @@ function K.terminal()
 end
 
 function K.sessions()
-  map ( 'n', '<leader>ss' ,':mks! ' .. config.core.session_path .. '<CR>' )
-  map ( 'n', '<leader>sl' ,':source ' .. config.core.session_path .. '<CR>' )
+	if config.core.session_path then
+		map ( 'n', '<leader>ss' ,':mks! ' .. config.core.session_path .. '<CR>' )
+		map ( 'n', '<leader>sl' ,':source ' .. config.core.session_path .. '<CR>' )
+	end
 end
 
 function K.window()
