@@ -11,7 +11,7 @@ are recommended).
 
 
 
-![neo-minivimist](./assets/neo-minivimist.png)
+![](./assets/neo-minivimist.png)
 
 
 
