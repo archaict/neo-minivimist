@@ -30,22 +30,21 @@ it is easier to unlink it afterwards.
 READ THIS FIRST!: please make backups before you do this!
 
 ``` bash
-$ cp -r ~/.config/nvim ~/.config/.pre_neo-minivimist
-$ git clone https://github.com/archaict/neo-minivimist ~/.config/neo-minivimist
+mv ~/.config/nvim ~/.config/.pre_neo-minivimist && \
+  git clone https://github.com/archaict/neo-minivimist ~/.config/neo-minivimist
+```
 
-# CHOOSE ONE BELOW!
-# if you want to link it
-$ ln -srf ~/.config/neo-minivimist ~/.config/nvim
-
-# if you want to move it
-$ rm -rf ~/.config/nvim
-$ mv ~/.config/neo-minivimist ~/.config/nvim
+Copy and paste command below to link it ( recommended ), you can unlink it
+later by using `unlink ~/.config/nvim`.
+```
+ln -srf ~/.config/neo-minivimist ~/.config/nvim
 ```
 
 To restore your vim configuration, you can use commands below:
 ```
-$ rm ~/.config/nvim # to remove neo-minivimist
-$ mv ~/.config/.pre_neo-minivimist ~/.config/nvim # to restore it
+unlink ~/.config/nvim # to unlink nvim
+rm ~/.config/neo-minivimist # to remove neo-minivimist
+mv ~/.config/.pre_neo-minivimist ~/.config/nvim # to restore it
 ```
 
 ## Folder Structure
