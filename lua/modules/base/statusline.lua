@@ -1,4 +1,10 @@
-  -- bg        = '#202020';
+-- statusline.lua
+-- ctermbg thingy is still wonky, please use this in terminal
+-- that support xterm-256color or  terminal like kitty and
+-- alacritty for better performance otherwise, change the
+-- value or disable this completely! --> lua/core/module.lua
+
+-- bg        = '#202020';
   -- fg        = '#bbc2cf';
   -- black     = '#282828';
   -- grey      = '#5C6773';
