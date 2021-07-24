@@ -66,7 +66,9 @@ else
     o.showtabline = 0 -- no need to see tablines
 end
 
+
 if config.core.tabline_colorize then
+
     cmd( "au ColorScheme * hi TabLine " ..
     "cterm="   .. config.core.tabline.cstyle .. " " ..
     "ctermfg=" .. config.core.tabline.cfg .. " " ..
@@ -91,15 +93,18 @@ if config.core.tabline_colorize then
     "guifg=" .. config.core.tabline_selected.fg .. " " ..
     "guibg=" .. config.core.tabline_selected.bg
     )
+
   else
-    cmd( "au ColorScheme * hi Tabline cterm=none ctermfg=grey ctermbg=black")
-    cmd( "au ColorScheme * hi Tabline gui=none guifg=grey guibg=black")
-    cmd( "au ColorScheme * hi TablineFill cterm=none ctermfg=grey ctermbg=black")
-    cmd( "au ColorScheme * hi TablineFill gui=none guifg=grey guibg=black")
-    cmd( "au ColorScheme * hi TablineSel cterm=none ctermfg=grey ctermbg=black")
-    cmd( "au ColorScheme * hi TablineSel gui=none guifg=grey guibg=black")
+
+    cmd( "au ColorScheme * hi Tabline     cterm=none ctermfg=none ctermbg=none")
+    cmd( "au ColorScheme * hi Tabline     gui=none guifg=#909090 guibg=#14191F")
+    cmd( "au ColorScheme * hi TablineFill cterm=none ctermfg=none ctermbg=none")
+    cmd( "au ColorScheme * hi TablineFill gui=none guifg=#909090 guibg=#202020")
+    cmd( "au ColorScheme * hi TablineSel  cterm=none ctermfg=none ctermbg=none")
+    cmd( "au ColorScheme * hi TablineSel  gui=italic guifg=#dddddd guibg=#404040")
 
 end
+
 
 if config.core.cursorline then
     o.cursorline = true -- highlight the cursorline
