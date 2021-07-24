@@ -58,7 +58,7 @@ codex.core = { -- [ Core configuration defaults ] ------------------------------
     --   fg = '#101010', bg = '#707070', style = 'italic',
     -- }, -- end of tabline_colorize
 ------ [ Column ] --------------------------------------------------------------
-    max_column = 80,               -- [ intg ] change to 0 to disable
+    max_column = 0,                -- [ intg ] change to 0 to disable
     cursorline = true,             -- [ bool ] enable cursorline
     bettersplits = true,           -- [ bool ] splits below and right
 ---------- [ Column Color ] ----------------------------------------------------
