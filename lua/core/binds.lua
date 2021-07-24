@@ -2,6 +2,7 @@
 -- sane keybindings for your writing conveniences
 local cmd = vim.cmd         -- execute Vim commands
 local opts = { noremap = true }
+local config = require('core')
 -- requires ---------------------------------------
 ---------------------------------------------------
 vim.g.mapleader  = ' '
@@ -162,6 +163,11 @@ function K.terminal()
   map ( 't', '<C-e><C-w>' , '<C-\\><C-n><C-w><C-w>'  )
   map ( 't', '<C-q>'      , '<C-\\><C-n>:silent! bd!<CR>'  )
 
+end
+
+function K.sessions()
+  map ( 'n', '<leader>ss' ,':mks! ' .. config.core.session_path .. '<CR>' )
+  map ( 'n', '<leader>sl' ,':source ' .. config.core.session_path .. '<CR>' )
 end
 
 function K.window()
