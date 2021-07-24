@@ -45,11 +45,20 @@ if config.core.guifont then
     o.guifont = config.core.guifont .. ":h" .. config.core.guifont_size
 end
 
-if config.core.max_column then -- for those in the 80s
-    o.colorcolumn = tostring(config.core.max_column)
+if config.core.comment_style == "italic" then
+    cmd "au ColorScheme * hi Comment cterm=italic gui=italic"
+elseif config.core.comment_style == "bold" then
+    cmd "au ColorScheme * hi Comment cterm=bold gui=bold"
+elseif config.core.comment_style == "none" then
+    cmd "au ColorScheme * hi Comment cterm=none gui=none"
 end
 
-if config.core.tabline == "toggle" then
+if config.core.max_column then -- for those in the 80s
+    o.colorcolumn = tostring(config.core.max_column)
+    cmd("au ColorScheme * hi ColorColumn " .. config.core.column_color)
+end
+
+if config.core.tabline == "toggle" or 1 then
     o.showtabline = 1 -- no need to see tablines
 elseif config.core.tabline then
     o.showtabline = 2 -- no need to see tablines
@@ -57,8 +66,44 @@ else
     o.showtabline = 0 -- no need to see tablines
 end
 
+if config.core.tabline_colorize then
+    cmd( "au ColorScheme * hi TabLine " ..
+    "cterm="   .. config.core.tabline.cstyle .. " " ..
+    "ctermfg=" .. config.core.tabline.cfg .. " " ..
+    "ctermbg=" .. config.core.tabline.cbg .. " " ..
+    "gui="   .. config.core.tabline.style .. " " ..
+    "guifg=" .. config.core.tabline.fg .. " " ..
+    "guibg=" .. config.core.tabline.bg
+    )
+    cmd( "au ColorScheme * hi TabLineFill " ..
+    "cterm="   .. config.core.tabline_fill.cstyle .. " " ..
+    "ctermfg=" .. config.core.tabline_fill.cfg .. " " ..
+    "ctermbg=" .. config.core.tabline_fill.cbg .. " " ..
+    "gui="   .. config.core.tabline_fill.style .. " " ..
+    "guifg=" .. config.core.tabline_fill.fg .. " " ..
+    "guibg=" .. config.core.tabline_fill.bg
+    )
+    cmd( "au ColorScheme * hi TabLineSel " ..
+    "cterm="   .. config.core.tabline_selected.cstyle .. " " ..
+    "ctermfg=" .. config.core.tabline_selected.cfg .. " " ..
+    "ctermbg=" .. config.core.tabline_selected.cbg .. " " ..
+    "gui="   .. config.core.tabline_selected.style .. " " ..
+    "guifg=" .. config.core.tabline_selected.fg .. " " ..
+    "guibg=" .. config.core.tabline_selected.bg
+    )
+  else
+    cmd( "au ColorScheme * hi Tabline cterm=none ctermfg=grey ctermbg=black")
+    cmd( "au ColorScheme * hi Tabline gui=none guifg=grey guibg=black")
+    cmd( "au ColorScheme * hi TablineFill cterm=none ctermfg=grey ctermbg=black")
+    cmd( "au ColorScheme * hi TablineFill gui=none guifg=grey guibg=black")
+    cmd( "au ColorScheme * hi TablineSel cterm=none ctermfg=grey ctermbg=black")
+    cmd( "au ColorScheme * hi TablineSel gui=none guifg=grey guibg=black")
+
+end
+
 if config.core.cursorline then
     o.cursorline = true -- highlight the cursorline
+    cmd("au ColorScheme * hi CursorLine " .. config.core.cursorline_color)
 end
 
 -- normal command line size [1]
@@ -148,7 +193,7 @@ end
 
 if config.core.undo then
     o.undofile = true -- enable undo file support
-    o.undodir = config.core.undodir -- move undodir
+    o.undodir = vim.fn.stdpath 'cache' .. config.core.undodir
 end
 ----------------------------------------------------------
 
@@ -171,8 +216,8 @@ end
 ----------------------------------------------------------
 
 ----------------------------------------------------------
-if config.core.setup_terminal then
-    o.shell = "/bin/zsh" -- default shell terminal
+if config.core.terminal_shell then
+    o.shell = config.core.terminal_shell -- default shell terminal
     o.ttimeout = true
     o.ttimeoutlen = 50
 end
@@ -221,15 +266,17 @@ if config.core.history > 0 then
     o.history = config.core.history
 end
 
-if config.core.popup then
+if config.core.popup then -- TODO: Check if its supported wihtout plugins
     o.pumheight = config.core.popup_height
 end
 
-if config.core.timeout then
-    o.timeout = true -- enable this if you use which-key
+if config.core.timeout > 0 then
+    o.timeout = true  -- enable this if you use which-key
+    o.timeoutlen = config.core.timeout
 else
-    o.timeout = false -- enable this if you use which-key
+    o.timeout = false -- disable | this one is optional
 end
+
 if config.core.wildmenu then
     o.wildmenu = true
     o.wildmode = "list:full"
@@ -249,6 +296,7 @@ end
 
 if config.core.auto_change_directory then
     o.autochdir = true -- auto change to current buffer dir
+    cmd("au BufEnter * if expand('%:p:h') !~ '^/tmp' | silent! lcd %:p:h | endif") -- autochdir
 end
 
 if config.core.auto_resize_splits then
@@ -266,16 +314,40 @@ end
 if config.core.remove_whitespaces then
     cmd("au! BufWritePre * :%s/\\s\\+$//e") -- remove trailing whitespaces
 end
-cmd("au! FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2")
 -------------------------------------------------------------------------------
 
+-- cmd("au! FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2")
 -- cmd("au! FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler")
--- cmd("au BufEnter * if expand('%:p:h') !~ '^/tmp' | silent! lcd %:p:h | endif") -- autochdir - create opts
 
 ------ [ management ] ---------------------------------------------------------
 -- cmd("au! VimLeavePre * SessionSave codex")  -- autosave session on quit
+if config.core.autosave then
+  cmd("silent! !mkdir -p " .. config.core.session_dir)
+  cmd("au! VimLeavePre * mks! " .. config.core.session_path)  -- autosave session on quit
+
+end
+
+if config.core.autoload then -- FIXME color is missing on reload! DO NOT USE THIS
+  -- workaround is to :e to source the file itself, not recommended for now
+  -- use <spc> s l to load session
+  cmd("au! VimEnter * :source " .. config.core.session_path)  -- autoload session on quit
+end
+
 -------------------------------------------------------------------------------
 
+------ [ Transparency ] -------------------------------------------------------
+if config.core.transparency then
+  -- Transparency | from LunarVim conf
+  cmd "au ColorScheme * hi Normal      ctermbg=NONE guibg=NONE"
+  cmd "au ColorScheme * hi Pmenu       ctermbg=NONE guibg=NONE"
+  cmd "au ColorScheme * hi SignColumn  ctermbg=NONE guibg=NONE"
+  cmd "au ColorScheme * hi NormalNC    ctermbg=NONE guibg=NONE"
+  cmd "au ColorScheme * hi MsgArea     ctermbg=NONE guibg=NONE"
+  cmd "au ColorScheme * hi EndOfBuffer ctermbg=NONE guibg=NONE ctermfg=black guifg=black"
+
+  cmd "let &fcs='eob:  '"
+end
+-------------------------------------------------------------------------------
 ------ [ ftplugin ] -----------------------------------------------------------
 if config.core.filetype then
     cmd "filetype on" -- enable ftplugin
