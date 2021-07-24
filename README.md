@@ -3,7 +3,7 @@
 **Minimal and Beautiful ( on-progress ) Neovim config!**
 
 This is an opinionated config/dotfiles for neovim beginners. Since Neovim is
-migrating most of its configuration bases to lua, you might also wanna see some
+migrating most of its configuration to lua, you might also wanna see some
 configurations that can be done with minimal plugins!
 
 Configuration doesn't include plugins, you might want to install it using your
