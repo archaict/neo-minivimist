@@ -1,7 +1,7 @@
 -- Core Lua
 -- Welcome to opinionated configuration files for vim this is a minimalist
 -- version of my original configuratio hopefully without plugins and use all
--- vim internals.
+-- vim internals. READ INSTRUCTION BELOW TO CHANGE CONFIGURATIONS!
 
 local M = {}
 local codex = M
@@ -9,31 +9,35 @@ local codex = M
   -- [ CORE ]
   -- These are core configurations that you can change any suggestion
   -- is welcome. ( I'm not good with gits, so you might want to send it into
-  -- the discussion page ).
+  -- the discussion page ). To enable stuff, just write true, and to disable
+  -- just comment false in their respective field.
+  -- [ bool ] : fills with boolean value, true or false
+  -- [ intg ] : integers, fills with postive number or 0
+  -- [ strg ] : strings, use quotation marks, exm: "hello world"
 
 codex.core = { -- [ Core configuration defaults ] -----------------------------
 
 -- [ Essentials ] -------------------------------------------------------------
-    init  = true,                 -- essentials
-    mouse = true,                 -- enable or disable mouse
-    timeout = 1000,               -- fill this for whichkey
+    init  = true,                 -- [ bool ] essentials
+    mouse = true,                 -- [ bool ] enable or disable mouse
+    timeout = 1000,               -- [ intg ] fill this for whichkey
 -------------------------------------------------------------------------------
 
 -- [ Syntaxes ] ---------------------------------------------------------------
-    syntax = true,                -- enable syntaxes
-    completion = true,            -- enable completion
+    syntax = true,                -- [ bool ] enable syntaxes
+    completion = true,            -- [ bool ] enable completion
 -------------------------------------------------------------------------------
 
 -- [ Themes ] -----------------------------------------------------------------
-    colorscheme = "ayu",          -- your colorscheme
-    dark_theme = true,            -- enable dark_mode
-    transparency = true,
+    colorscheme = "ayu",          -- [ strg ] your colorscheme
+    dark_theme = true,            -- [ bool ] enable dark_mode
+    transparency = true,          -- [ bool ] enable transparency
 -------------------------------------------------------------------------------
 
 -- [ Fonts ] ------------------------------------------------------------------
-    guifont = 'Iosevka SS08 Semibold', -- font type
-    guifont_size = '12',          -- font size
-    comment_style = 'italic',     -- italic / bold / none
+    guifont = 'Iosevka SS08 Semibold', -- [ strg ] font type
+    guifont_size = '12',          -- [ strg ] font size TODO > to integers
+    comment_style = 'italic',     -- [ strg ] italic / bold / none
 -------------------------------------------------------------------------------
 
 -- NOTE: Color is not all implemented like below, but if people wants it, then
@@ -42,8 +46,8 @@ codex.core = { -- [ Core configuration defaults ] -----------------------------
 
 -- [ Lines ] ------------------------------------------------------------------
 ------ [ Tabline ] ------------------------------------------------------------
-    tabline = 'toggle',              -- enable tab in top
-    tabline_colorize = false,        -- enable to change color
+    tabline = 'toggle',            -- [ strg ] [ bool ] true | false | toggle
+    tabline_colorize = false,      -- [ bool ] enable to change color
 ---------- [ Tabline Color ] --------------------------------------------------
 -- This is an example as of how to change each table, you can fill it out, or
 -- use default by disabling tabline_colorize. Change tabline to tabline_fill
@@ -54,21 +58,21 @@ codex.core = { -- [ Core configuration defaults ] -----------------------------
     --   fg = '#101010', bg = '#707070', style = 'italic',
     -- }, -- end of tabline_colorize
 ------ [ Column ] -------------------------------------------------------------
-    max_column = 0,              -- change to 0 to disable, hi max_column
-    cursorline = true,            -- enable cursorline
-    bettersplits = true,          -- splits below and right
+    max_column = 0,                -- [ intg ] change to 0 to disable
+    cursorline = true,             -- [ bool ] enable cursorline
+    bettersplits = true,           -- [ bool ] splits below and right
 ---------- [ Column Color ] ---------------------------------------------------
 -- If this should be written as above
-    column_color = 'guibg=#303030', -- only bg_color can be changed
-    cursorline_color = 'guibg=#303030', -- same as above
+    column_color = 'guibg=#303030', -- [ strg ] only bg_color can be changed
+    cursorline_color = 'guibg=#303030', -- [ strg ] same as above
 -------------------------------------------------------------------------------
 
 -- [ StatusLine ] -------------------------------------------------------------
-    history = 5000,
-    show_mode = true,             -- show active mode
-    statusline = true,            -- enable bottom statusline
-    show_command = true,          -- show commands
-    command_screen_height = 1,    -- height for commands
+    history = 5000,                -- [ intg ] enable command history
+    show_mode = true,              -- [ bool ] show active mode
+    statusline = true,             -- [ bool ] enable bottom statusline
+    show_command = true,           -- [ bool ] show commands
+    command_screen_height = 1,     -- [ intg ] height for commands
 -------------------------------------------------------------------------------
 
 -- [ Numbers ] ----------------------------------------------------------------
@@ -77,74 +81,74 @@ codex.core = { -- [ Core configuration defaults ] -----------------------------
 -------------------------------------------------------------------------------
 
 -- [ Terminals ] --------------------------------------------------------------
-    terminal_shell = "/bin/zsh",  -- initialize terminal
-    smart_terminal = true,        -- smarter terminal mode
+    terminal_shell = "/bin/zsh",   -- [ strg ] initialize terminal
+    smart_terminal = true,         -- [ bool ] smarter terminal mode
 -------------------------------------------------------------------------------
 
 -- [ Highlights ] -------------------------------------------------------------
-    wildmenu = true,
-    highlights = true,
+    wildmenu = true,               -- [ bool ] enable wildmenu
+    highlights = true,             -- [ bool ] enable highlights option
 -------------------------------------------------------------------------------
 
 -- [ Shiftings ] --------------------------------------------------------------
-    wrap = true,                 -- wrap text around window
-    shifts = 2,                  -- shifts amount for tabs
-    indentation = true,          -- all indentation stuff
+    wrap = true,                   -- [ bool ] wrap text around window
+    shifts = 2,                    -- [ bool ] shifts amount for tabs
+    indentation = true,            -- [ bool ] all indentation stuff
 -------------------------------------------------------------------------------
 
 -- [ Spaces ] -----------------------------------------------------------------
-    show_spaces = true,
-    tab_to_space = true,
-    show_characters = 'tab:» ,trail:·',
+    show_spaces = true,            -- [ bool ] show spaces
+    tab_to_space = true,           -- [ bool ] change tab to spaces | expandtab
+    show_characters = 'tab:» ,trail:·', -- [ strg ]
 -------------------------------------------------------------------------------
 
 -- [ Clipboard ] --------------------------------------------------------------
-    system_clipboard = true,
+    system_clipboard = true,       -- [ bool ] enable system clipboard
 -------------------------------------------------------------------------------
 
 -- [ Restore ] ----------------------------------------------------------------
-    swap  = false,
-    undo  = true,                -- enable undofile & dirs
-    undodir  = '/undo',          -- undodir location in 'cache' directory
+    swap  = false,                 -- [ bool ] enable swaps
+    undo  = true,                  -- [ bool ] enable undofile & dirs
+    undodir  = '/undo',            -- [ strg ] undodir location in 'cache' dirs
 -------------------------------------------------------------------------------
 
 -- [ NO-MESS ] ----------------------------------------------------------------
-    shortmess = false,            -- FIXME still on-progress
+    shortmess = false,             -- [ bool ] FIXME still on-progress
 -------------------------------------------------------------------------------
 
 -- [ Folds ] ------------------------------------------------------------------
-    fold = true,                 -- edit in config.lua
-    fold_expr = '',              -- custom fold expressions
-    fold_method = 'marker',      -- method used for folds
+    fold = true,                   -- [ bool ] edit in config.lua
+    fold_expr = '',                -- [ strg ] custom fold expressions
+    fold_method = 'marker',        -- [ strg ] method used for folds
 -------------------------------------------------------------------------------
 
 -- [ Scrolls ] ----------------------------------------------------------------
-    scrolloff = 10,              -- scroll offside verticals
-    sidescrolloff= 4,            -- scroll offside horizontals
+    scrolloff = 10,                -- [ bool ] scroll offside verticals
+    sidescrolloff= 4,              -- [ bool ] scroll offside horizontals
 -------------------------------------------------------------------------------
 
 -- [ Pop-Up ] -----------------------------------------------------------------
-  -- popup = true,                -- enable popup
-  -- popup_height = 10,           -- pmenu height
+  -- popup = true,                -- [ bool ] enable popup
+  -- popup_height = 10,           -- [ strg ] pmenu height
 -------------------------------------------------------------------------------
 
 -- [ Sessions ] ---------------------------------------------------------------
-    -- autosave = true,            -- save session on quit
-    session_dir = "~/.local/share/nvim/sessions", -- dirs
-    session_path = "~/.local/share/nvim/sessions/obsessed",
+    -- autosave = true,           -- [ bool ] save session on quit
+    session_dir = "~/.local/share/nvim/sessions", -- [ strg ] dirs
+    session_path = "~/.local/share/nvim/sessions/obsessed", -- [ strg ]
 -------------------------------------------------------------------------------
 
 -- [ Automate it! ] -----------------------------------------------------------
-    auto_read_on_change = true,    -- autoread on changes
-    auto_change_directory = true,  -- autochdir
-    auto_resize_splits = true,     -- refresh on vim resize
-    hide_buffers_on_change = true, -- hides instead of kills
-    remove_whitespaces = true,     -- remove trails on save
-    remember_cursor_position =true, -- mark cursors on quit
+    auto_read_on_change = true,     -- [ bool ] autoread on changes
+    auto_change_directory = true,   -- [ bool ] autochdir
+    auto_resize_splits = true,      -- [ bool ] refresh on vim resize
+    hide_buffers_on_change = true,  -- [ bool ] hides instead of kills
+    remove_whitespaces = true,      -- [ bool ] remove trails on save
+    remember_cursor_position =true, -- [ bool ] mark cursors on quit
 -------------------------------------------------------------------------------
 
 -- [ Filetype ] ---------------------------------------------------------------
-    filetype = true,
+    filetype = true,              -- [ bool ] enable filetype plugins
 -------------------------------------------------------------------------------
 
 } -----------------------------------------------------------------------------
