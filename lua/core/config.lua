@@ -53,8 +53,13 @@ elseif config.core.comment_style == "none" then
     cmd "au ColorScheme * hi Comment cterm=none gui=none"
 end
 
-if config.core.max_column then -- for those in the 80s
+if not config.core.max_column then -- for those in the 80s
+    o.colorcolumn = ""
+  else
     o.colorcolumn = tostring(config.core.max_column)
+end
+
+if config.core.column_color then -- for those in the 80s
     cmd("au ColorScheme * hi ColorColumn " .. config.core.column_color)
 end
 
@@ -107,6 +112,12 @@ end
 
 if config.core.cursorline then
     o.cursorline = true -- highlight the cursorline
+  else
+    o.cursorline = false -- highlight the cursorline
+end
+if not config.core.cursorline_color then
+    cmd("au ColorScheme * hi CursorLine guibg=none ctermbg=none")
+  else
     cmd("au ColorScheme * hi CursorLine " .. config.core.cursorline_color)
 end
 
@@ -149,11 +160,17 @@ if config.core.indentation then
     o.smartindent = true -- smarter indentation
 end
 
-if config.core.shifts > 0 then
+if not config.core.shifts then
+    o.shiftround = true
+    o.smarttab = true -- add those spaces and indentation
+    o.shiftwidth = 2 -- smaller than most {default 4}
+    o.tabstop = 2 -- smaller than most {default 4}
+else
     o.shiftround = true
     o.smarttab = true -- add those spaces and indentation
     o.shiftwidth = config.core.shifts -- smaller than most {default 4}
     o.tabstop = config.core.shifts -- smaller than most {default 4}
+
 end
 
 if config.core.show_spaces then
@@ -249,13 +266,15 @@ end
 ----------------------------------------------------------
 
 ----------------------------------------------------------
-if config.core.sidescrolloff >= 0 then
+if not config.core.sidescrolloff then
+    o.sidescrolloff = 8
+	else
     o.sidescrolloff = config.core.sidescrolloff
 end
 
 if not config.core.wrap then
     w.wrap = false -- do not wrap text around frame
-else
+	else
     w.wrap = true -- wrap text around frame
 end
 ----------------------------------------------------------
@@ -266,7 +285,7 @@ if config.core.scrolloff then
 end
 ----------------------------------------------------------
 
-if config.core.history > 0 then
+if config.core.history then
     o.history = config.core.history
 end
 
@@ -274,7 +293,7 @@ if config.core.popup then -- TODO: Check if its supported wihtout plugins
     o.pumheight = config.core.popup_height
 end
 
-if config.core.timeout > 0 then
+if config.core.timeout then
     o.timeout = true  -- enable this if you use which-key
     o.timeoutlen = config.core.timeout
 else
