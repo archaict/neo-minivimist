@@ -261,7 +261,7 @@ if config.core.show_command then
 end
 
 if config.core.show_mode then
-    o.showmode = false -- those --INSERT-- on cmd
+    o.showmode = true -- those --INSERT-- on cmd
 end
 ----------------------------------------------------------
 
