@@ -27,7 +27,7 @@ There are multiple folders for each, you might want to change
 `neo-minivimist` to other `nvim` or you can link it, I choose the latter, since
 it is easier to unlink it afterwards.
 
-READ THIS FIRST!: please make backups before you do this!
+**READ THIS FIRST!**: please make **backups** before you do this!
 
 ``` bash
 mv ~/.config/nvim ~/.config/.pre_neo-minivimist && \
@@ -36,15 +36,15 @@ mv ~/.config/nvim ~/.config/.pre_neo-minivimist && \
 
 Copy and paste command below to link it ( recommended ), you can unlink it
 later by using `unlink ~/.config/nvim`.
-```
+``` bash
 ln -srf ~/.config/neo-minivimist ~/.config/nvim
 ```
 
 To restore your vim configuration, you can use commands below:
-```
+``` bash
 unlink ~/.config/nvim # to unlink nvim
 rm ~/.config/neo-minivimist # to remove neo-minivimist
-mv ~/.config/.pre_neo-minivimist ~/.config/nvim # to restore it
+mv ~/.config/.pre_neo-minivimist ~/.config/nvim # to restore your nvim
 ```
 
 ## Folder Structure
@@ -90,7 +90,7 @@ neo-minivimist/
 ```
 As you can see, there are still much room for improvements!
 
-NOTE: **Base** are taken from [tpope](https://github.com/tpope) plugins,
+**NOTE:** **Base** are sourced from [tpope](https://github.com/tpope) plugins,
 not much else as you can see, although there is a wild `netrw.lua` threw
 inside this directory!
 
