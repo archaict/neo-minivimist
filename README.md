@@ -4,10 +4,9 @@
 
 This is an opinionated config/dotfiles for neovim beginners. Since Neovim is
 migrating most of its configuration to lua, people might want to see what can
-be done with lua based configuration.
-
-Configuration doesn't include plugins, you might want to install it using your
-own plugin manager.
+be done with lua based configuration. This configuration doesn't include
+plugins, you might want to install it using plugin managers ( packer and paq
+are recommended).
 
 Inspired by projects like [doom-nvim](https://github.com/NTBBloodbath/doom-nvim)
 (I'm going back and forth between emacs and nvim, and now this!?),
@@ -19,7 +18,7 @@ turned into a minimal neovim config (not super minimal, but okayish).
 
 **NOTE:** your config is inside lua folder, named **core.lua** remember that!
 
-`Maxivimist` version will be published at later date once it completes.
+`Maxivimist` version will be published at later date once it complete.
 
 ## Installation
 
