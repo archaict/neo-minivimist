@@ -8,12 +8,11 @@
 --     - colors/
 --         ayu-core.vim
 --     - lua/
---       + core/        -- core configuration
---       + modules/     -- modules [ base ] and [ plugins ]
---       + utils/       -- swiss-army-knife
---       + core.lua     -- your core configuration
+--       + core/        -- where core configuration files resides
+--       + modules/     -- modules [ base ] and [ plugins ] TODO at later date
+--       + utils/       -- swiss-army-knife to help with wrinting functions
+--       + core.lua     -- your core configuration < you should edit this file
 --       init.lua
-
 
 -- Utility
 require('utils.util')
