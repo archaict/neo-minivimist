@@ -31,7 +31,7 @@ codex.core = { -- [ Core configuration defaults ] ------------------------------
 -- [ Themes ] ------------------------------------------------------------------
     colorscheme = "ayu",          -- [ strg ] your colorscheme
     dark_theme = true,            -- [ bool ] enable dark_mode
-    transparency = true,          -- [ bool ] enable transparency
+    transparency = false,          -- [ bool ] enable transparency
 --------------------------------------------------------------------------------
 
 -- [ Fonts ] -------------------------------------------------------------------
@@ -46,17 +46,26 @@ codex.core = { -- [ Core configuration defaults ] ------------------------------
 
 -- [ Lines ] -------------------------------------------------------------------
 ------ [ Tabline ] -------------------------------------------------------------
-    tabline = 'toggle',            -- [ strg ] [ bool ] true | false | toggle
-    tabline_colorize = false,      -- [ bool ] enable to change color
+    tabline = 'toggle',            -- [ strg ] [ bool ] true | false | 'toggle'
+    tabline_colorize = true,      -- [ bool ] enable to change color
 ---------- [ Tabline Color ] ---------------------------------------------------
 -- This is an example as of how to change each table, you can fill it out, or
 -- use default by disabling tabline_colorize. Change tabline to tabline_fill
 -- tabline_selected as you wish, to use all, just copy and paste code below and
--- fill the others!
-    -- tabline = { -- change to tabline | tabline_fill | tabline_selected
-    --   cfg = 'NONE', cbg = 'NONE', cstyle = 'italic',
-    --   fg = '#101010', bg = '#707070', style = 'italic',
-    -- }, -- end of tabline_colorize
+-- fill the others! [ tabline_normal | tabline_fill | tabline_selected ]
+    tabline_normal = {
+      cfg = 'NONE', cbg = 'NONE', cstyle = 'italic',
+      fg = '#707070', bg = '#14191F', style = 'none',
+    },
+    tabline_fill = {
+      cfg = 'NONE', cbg = 'NONE', cstyle = 'italic',
+      fg = '#14191F', bg = 'NONE', style = 'none',
+    },
+    tabline_selected = {
+      cfg = 'NONE', cbg = 'NONE', cstyle = 'italic',
+      fg = '#ddd', bg = '#303030', style = 'italic',
+    }, -- end of tabline_colorize
+
 ------ [ Column ] --------------------------------------------------------------
     max_column = 0,                -- [ intg ] change to 0 to disable
     cursorline = true,             -- [ bool ] enable cursorline
@@ -76,8 +85,11 @@ codex.core = { -- [ Core configuration defaults ] ------------------------------
 --------------------------------------------------------------------------------
 
 -- [ Numbers ] -----------------------------------------------------------------
-    number = true,
-    relative_number = true,
+    number = true,                 -- [ bool ] show number
+    relative_number = true,        -- [ bool ] show relative_number
+    remove_eob = true,             -- [ bool ] remove end of buffer character
+    sign_column = true,            -- [ bool ] enable left sign column
+    sign_column_width = 1,         -- [ intg ] width of sign column
 --------------------------------------------------------------------------------
 
 -- [ Terminals ] ---------------------------------------------------------------
@@ -86,7 +98,8 @@ codex.core = { -- [ Core configuration defaults ] ------------------------------
 --------------------------------------------------------------------------------
 
 -- [ Highlights ] --------------------------------------------------------------
-    wildmenu = true,               -- [ bool ] enable wildmenu
+    fuzzy = true,                  -- [ bool ] enable search through set path
+    wildmenu = true,               -- [ bool ] enable wildmenu for fuzzy
     highlights = true,             -- [ bool ] enable highlights option
 --------------------------------------------------------------------------------
 
@@ -133,9 +146,11 @@ codex.core = { -- [ Core configuration defaults ] ------------------------------
 --------------------------------------------------------------------------------
 
 -- [ Sessions ] ----------------------------------------------------------------
-    -- autosave = true,           -- [ bool ] save session on quit
-    session_dir = "~/.local/share/nvim/sessions", -- [ strg ] dirs
-    session_path = "~/.local/share/nvim/sessions/obsessed", -- [ strg ]
+    -- auto_save_session = true,     -- [ bool ] save session on quit
+    -- auto_load_session = true,     -- [ bool ] save session on quit
+    session_dir = "~/.local/share/nvim/sessions/", -- [ strg ] dirs
+    session_name = ".obsession",  -- [ strg ]
+    reload_config = true,
 --------------------------------------------------------------------------------
 
 -- [ Automate it! ] ------------------------------------------------------------
@@ -182,15 +197,15 @@ Keymaps = { -- [ Core keymaps defaults ] ---------------------------------------
 
 codex.modules = { -- [ Core keymaps defaults ] ---------------------------------
 
+  -- [ Tpope Plugins] : enabled by default | not an option anymore
+  -- I only use some that I used daily, you might want to add more depending on
+  -- your usage. Complete-ing your vim experiences!
+
   -- [ Netrw ]
   -- Since this one is builtins, why not use this one? disable this if you want
   -- to use NerdTree or NvimTree.
   netrw = true; -- enable netrw config
 
-  -- [ Tpope Plugins]
-  -- I only use some that I used daily, you might want to add more depending on
-  -- your usage. Complete-ing your vim experiences!
-  tpope = true; -- enable tpope module
 } --------------------------------------- [ MD ] -------------------------------
 
 return codex
