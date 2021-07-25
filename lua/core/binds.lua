@@ -133,8 +133,8 @@ function K.buffers()
   map ( 'n', '<C-e><C-n>' , ':bnext<cr>' )
   map ( 'n', '<C-e><C-p>' , ':bprevious<cr>' )
   -- Delete ( preserve layout ) or kill it!
-  map ( 'n', '<leader>bd' , ':silent! bp|bd#<cr>')
-  map ( 'n', '<leader>bk' , ':silent bd!<CR>' , opts )
+  map ( 'n', '<leader>bk' , ':silent! bp|bd#<cr>')
+  map ( 'n', '<leader>bK' , ':silent bd!<CR>' , opts )
   -- Buffer navigation, switch like tiling wm
   map ( 'n', '<leader>jj' , ':silent! bnext<cr>')
   map ( 'n', '<leader>kk' , ':silent! bprev<cr>')
@@ -166,10 +166,12 @@ function K.terminal()
 end
 
 function K.sessions()
-	if config.core.session_path then
-		map ( 'n', '<leader>ss' ,':mks! ' .. config.core.session_path .. '<CR>' )
-		map ( 'n', '<leader>sl' ,':source ' .. config.core.session_path .. '<CR>' )
-	end
+  local session = config.core.session_dir
+  local session_name = config.core.session_name
+  if config.core.session_name then
+    map ( 'n', '<leader>ss' ,':mks! ' .. session .. session_name .. '<CR>' )
+    map ( 'n', '<leader>sl' ,':source ' .. session .. session_name .. '<CR>' )
+  end
 end
 
 function K.window()

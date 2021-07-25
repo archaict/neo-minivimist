@@ -1,0 +1,129 @@
+let SessionLoad = 1
+let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
+let v:this_session=expand("<sfile>:p")
+silent only
+silent tabonly
+cd ~/Dropbox/codex/neo-minivimist/lua/core
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +136 ~/Dropbox/codex/neo-minivimist/lua/core.lua
+badd +76 ~/Dropbox/codex/neo-minivimist/lua/core/binds.lua
+badd +99 ~/Dropbox/codex/neo-minivimist/lua/core/config.lua
+badd +54 ~/Dropbox/codex/neo-minivimist/lua/core/functions.lua
+badd +15 ~/Dropbox/codex/neo-minivimist/lua/core/highlights.lua
+badd +17 ~/Dropbox/codex/neo-minivimist/lua/core/modules.lua
+badd +46 ~/Dropbox/codex/neo-minivimist/lua/utils/util.lua
+badd +13 ~/Dropbox/codex/neo-minivimist/init.lua
+argglobal
+%argdel
+edit ~/Dropbox/codex/neo-minivimist/init.lua
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe '1resize ' . ((&lines * 25 + 26) / 53)
+exe 'vert 1resize ' . ((&columns * 117 + 117) / 234)
+exe '2resize ' . ((&lines * 25 + 26) / 53)
+exe 'vert 2resize ' . ((&columns * 117 + 117) / 234)
+exe 'vert 3resize ' . ((&columns * 116 + 117) / 234)
+argglobal
+balt ~/Dropbox/codex/neo-minivimist/lua/utils/util.lua
+setlocal fdm=marker
+setlocal fde=
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 10 - ((9 * winheight(0) + 12) / 25)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 10
+normal! 02|
+wincmd w
+argglobal
+if bufexists("~/Dropbox/codex/neo-minivimist/lua/core/config.lua") | buffer ~/Dropbox/codex/neo-minivimist/lua/core/config.lua | else | edit ~/Dropbox/codex/neo-minivimist/lua/core/config.lua | endif
+if &buftype ==# 'terminal'
+  silent file ~/Dropbox/codex/neo-minivimist/lua/core/config.lua
+endif
+balt ~/Dropbox/codex/neo-minivimist/lua/core/binds.lua
+setlocal fdm=marker
+setlocal fde=
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 119 - ((14 * winheight(0) + 12) / 25)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 119
+normal! 030|
+wincmd w
+argglobal
+if bufexists("~/Dropbox/codex/neo-minivimist/lua/core.lua") | buffer ~/Dropbox/codex/neo-minivimist/lua/core.lua | else | edit ~/Dropbox/codex/neo-minivimist/lua/core.lua | endif
+if &buftype ==# 'terminal'
+  silent file ~/Dropbox/codex/neo-minivimist/lua/core.lua
+endif
+balt ~/Dropbox/codex/neo-minivimist/init.lua
+setlocal fdm=marker
+setlocal fde=
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 142 - ((12 * winheight(0) + 25) / 51)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 142
+normal! 0
+wincmd w
+2wincmd w
+exe '1resize ' . ((&lines * 25 + 26) / 53)
+exe 'vert 1resize ' . ((&columns * 117 + 117) / 234)
+exe '2resize ' . ((&lines * 25 + 26) / 53)
+exe 'vert 2resize ' . ((&columns * 117 + 117) / 234)
+exe 'vert 3resize ' . ((&columns * 116 + 117) / 234)
+tabnext 1
+if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToOF
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if filereadable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &g:so = s:so_save | let &g:siso = s:siso_save
+set hlsearch
+nohlsearch
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

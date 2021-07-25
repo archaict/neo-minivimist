@@ -63,25 +63,40 @@ if config.core.column_color then -- for those in the 80s
     cmd("au ColorScheme * hi ColorColumn " .. config.core.column_color)
 end
 
-if config.core.tabline == "toggle" or 1 then
-    o.showtabline = 1 -- no need to see tablines
-elseif config.core.tabline then
+if not config.core.tabline then
+    o.showtabline = 0 -- show tablines
+  elseif config.core.tabline == 'toggle' then
+    o.showtabline = 1 -- toggle tablines
+  else
     o.showtabline = 2 -- no need to see tablines
-else
-    o.showtabline = 0 -- no need to see tablines
 end
 
 
-if config.core.tabline_colorize then
+if not config.core.tabline_colorize then
 
+  cmd([[
+    au ColorScheme * hi Tabline     cterm=none ctermfg=none ctermbg=none
+    au ColorScheme * hi Tabline     gui=none guifg=#909090 guibg=#14191F
+    au ColorScheme * hi TablineFill cterm=none ctermfg=none ctermbg=none
+    au ColorScheme * hi TablineFill gui=none guifg=#909090 guibg=none
+    au ColorScheme * hi TablineSel  cterm=none ctermfg=none ctermbg=none
+    au ColorScheme * hi TablineSel  gui=italic guifg=#dddddd guibg=#404040
+  ]])
+
+end
+
+if config.core.tabline_colorize and config.core.tabline_normal then
     cmd( "au ColorScheme * hi TabLine " ..
-    "cterm="   .. config.core.tabline.cstyle .. " " ..
-    "ctermfg=" .. config.core.tabline.cfg .. " " ..
-    "ctermbg=" .. config.core.tabline.cbg .. " " ..
-    "gui="   .. config.core.tabline.style .. " " ..
-    "guifg=" .. config.core.tabline.fg .. " " ..
-    "guibg=" .. config.core.tabline.bg
+    "cterm="   .. config.core.tabline_normal.cstyle .. " " ..
+    "ctermfg=" .. config.core.tabline_normal.cfg .. " " ..
+    "ctermbg=" .. config.core.tabline_normal.cbg .. " " ..
+    "gui="   .. config.core.tabline_normal.style .. " " ..
+    "guifg=" .. config.core.tabline_normal.fg .. " " ..
+    "guibg=" .. config.core.tabline_normal.bg
     )
+end
+
+if config.core.tabline_colorize and config.core.tabline_fill then
     cmd( "au ColorScheme * hi TabLineFill " ..
     "cterm="   .. config.core.tabline_fill.cstyle .. " " ..
     "ctermfg=" .. config.core.tabline_fill.cfg .. " " ..
@@ -90,6 +105,9 @@ if config.core.tabline_colorize then
     "guifg=" .. config.core.tabline_fill.fg .. " " ..
     "guibg=" .. config.core.tabline_fill.bg
     )
+end
+
+if config.core.tabline_colorize and config.core.tabline_selected then
     cmd( "au ColorScheme * hi TabLineSel " ..
     "cterm="   .. config.core.tabline_selected.cstyle .. " " ..
     "ctermfg=" .. config.core.tabline_selected.cfg .. " " ..
@@ -98,20 +116,11 @@ if config.core.tabline_colorize then
     "guifg=" .. config.core.tabline_selected.fg .. " " ..
     "guibg=" .. config.core.tabline_selected.bg
     )
-
-  else
-
-    cmd( "au ColorScheme * hi Tabline     cterm=none ctermfg=none ctermbg=none")
-    cmd( "au ColorScheme * hi Tabline     gui=none guifg=#909090 guibg=#14191F")
-    cmd( "au ColorScheme * hi TablineFill cterm=none ctermfg=none ctermbg=none")
-    cmd( "au ColorScheme * hi TablineFill gui=none guifg=#909090 guibg=#202020")
-    cmd( "au ColorScheme * hi TablineSel  cterm=none ctermfg=none ctermbg=none")
-    cmd( "au ColorScheme * hi TablineSel  gui=italic guifg=#dddddd guibg=#404040")
-
 end
 
 if config.core.cursorline then
     o.cursorline = true -- highlight the cursorline
+    cmd "au ColorScheme * hi CursorLine ctermbg=NONE guibg='#101010'"
   else
     o.cursorline = false -- highlight the cursorline
 end
@@ -139,6 +148,15 @@ if config.core.relative_number then
 else
     vim.cmd("set nornu")
 end
+
+if config.core.sign_column then
+    vim.cmd("set signcolumn=yes:"
+    .. config.core.sign_column_width ..
+    " ")
+  else
+    vim.cmd("set signcolumn=no")
+end
+
 
 if config.core.statusline then
     o.laststatus = 2
@@ -170,7 +188,6 @@ else
     o.smarttab = true -- add those spaces and indentation
     o.shiftwidth = config.core.shifts -- smaller than most {default 4}
     o.tabstop = config.core.shifts -- smaller than most {default 4}
-
 end
 
 if config.core.show_spaces then
@@ -203,6 +220,17 @@ if config.core.highlights then
     o.showmatch = true -- highlight matching parenthesis
     o.smartcase = true -- ignore lowercase for the whole pattern
 end
+
+if config.core.fuzzy then
+  vim.cmd([[
+  set path=$PWD/**
+  set wildignore+=**/.git/**,**/__pycache__/**,**/venv/**
+  set wildignore+=**/node_modules/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
+  set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
+  set wildignore+=*.pdf,*.psd
+  ]])
+end
+
 ----------------------------------------------------------
 
 ----------------------------------------------------------
@@ -336,24 +364,37 @@ end
 
 if config.core.remove_whitespaces then
     cmd("au! BufWritePre * :%s/\\s\\+$//e") -- remove trailing whitespaces
+  cmd("set sessionoptions-=options")
 end
 -------------------------------------------------------------------------------
 
--- cmd("au! FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2")
--- cmd("au! FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler")
-
 ------ [ management ] ---------------------------------------------------------
--- cmd("au! VimLeavePre * SessionSave codex")  -- autosave session on quit
-if config.core.autosave then
-  cmd("silent! !mkdir -p " .. config.core.session_dir)
-  cmd("au! VimLeavePre * mks! " .. config.core.session_path)  -- autosave session on quit
-
+if config.core.auto_save_session then
+  local session = config.core.session_dir
+  local session_name = config.core.session_name
+  cmd("set sessionoptions-=options")
+  cmd("silent! !mkdir -p " .. session )
+  cmd("au! VimLeavePre * mks! " .. session .. session_name)
 end
 
-if config.core.autoload then -- FIXME color is missing on reload! DO NOT USE THIS
-  -- workaround is to :e to source the file itself, not recommended for now
-  -- use <spc> s l to load session
-  cmd("au! VimEnter * :source " .. config.core.session_path)  -- autoload session on quit
+if config.core.auto_load_session then
+  local session = config.core.session_dir
+  local session_name = config.core.session_name
+  cmd([[
+    fu! RestoreSess()
+      if filereadable(expand( ']] .. session .. session_name .. [[' ))
+        execute 'source ]] .. session .. session_name .. [['
+        if bufexists(1)
+          for l in range(1, bufnr('$'))
+            if bufwinnr(l) == -1
+              exec 'sbuffer ' . l
+            endif
+          endfor
+        endif
+      endif
+    endfunction
+    au VimEnter * nested :call RestoreSess()
+  ]])
 end
 
 -------------------------------------------------------------------------------
@@ -361,14 +402,31 @@ end
 ------ [ Transparency ] -------------------------------------------------------
 if config.core.transparency then
   -- Transparency | from LunarVim conf
-  cmd "au ColorScheme * hi Normal      ctermbg=NONE guibg=NONE"
-  cmd "au ColorScheme * hi Pmenu       ctermbg=NONE guibg=NONE"
-  cmd "au ColorScheme * hi SignColumn  ctermbg=NONE guibg=NONE"
-  cmd "au ColorScheme * hi NormalNC    ctermbg=NONE guibg=NONE"
-  cmd "au ColorScheme * hi MsgArea     ctermbg=NONE guibg=NONE"
-  cmd "au ColorScheme * hi EndOfBuffer ctermbg=NONE guibg=NONE ctermfg=black guifg=#404040"
+  cmd ([[
+   "augroup transparency
+   "  autocmd!
+      au ColorScheme * hi Normal      ctermbg=NONE guibg=NONE
+      au ColorScheme * hi Pmenu       ctermbg=NONE guibg=NONE
+      au ColorScheme * hi SignColumn  ctermbg=NONE guibg=NONE
+      au ColorScheme * hi NormalNC    ctermbg=NONE guibg=NONE
+      au ColorScheme * hi MsgArea     ctermbg=NONE guibg=NONE
+      au ColorScheme * hi EndOfBuffer ctermbg=NONE guibg=NONE ctermfg=black guifg=#404040
+   "augroup END
+  ]])
+else
+  cmd ([[
+    au ColorScheme * hi Normal      ctermbg=NONE guibg=#0F1419
+    au ColorScheme * hi Pmenu       ctermbg=NONE guibg=#0F1419
+    au ColorScheme * hi SignColumn  ctermbg=NONE guibg=#0F1419
+    au ColorScheme * hi NormalNC    ctermbg=NONE guibg=#0F1419
+    au ColorScheme * hi MsgArea     ctermbg=NONE guibg=#0F1419
+  ]])
+  -- EoS
+end
 
-  cmd "let &fcs='eob:  '"
+if config.core.remove_eob then
+  cmd "set fcs=eob:\\ "   -- remove whitespaces
+  cmd "let &fcs='eob: '"
 end
 -------------------------------------------------------------------------------
 ------ [ ftplugin ] -----------------------------------------------------------
@@ -378,4 +436,15 @@ if config.core.filetype then
     cmd "filetype plugin indent on"
     cmd "set iskeyword+=-"
     cmd "set inccommand=split"
+end
+
+------ [ reload ] -------------------------------------------------------------
+
+if config.core.reload_config then
+  map ( 'n' , '<space>hr', ':lua reload_config{}<cr>', { noremap = true} )
+  function reload_config()
+    vim.cmd "source ~/.config/nvim/init.lua"
+    vim.cmd "source ~/.config/nvim/lua/core/binds.lua"
+    vim.cmd "echomsg 'Neo-Minivimist Reloaded!'"
+  end
 end
