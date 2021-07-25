@@ -53,6 +53,11 @@ rm ~/.config/neo-minivimist # to remove neo-minivimist
 mv ~/.config/.pre_neo-minivimist ~/.config/nvim # to restore your nvim
 ```
 
+**IMPORTANT**: if you're using plugin before, please clear neovim data.
+```
+rm -rf ~/.local/share/nvim/site/pack
+```
+
 ## Folder Structure
 
 There are three core folders ( inspired by
