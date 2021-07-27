@@ -8,12 +8,7 @@ be done with lua based configuration. This configuration doesn't include
 plugins, you might want to install it using plugin managers ( packer and paq
 are recommended).
 
-
-
-
 ![](./assets/neo-minivimist.png)
-
-
 
 Inspired by projects like [doom-nvim](https://github.com/NTBBloodbath/doom-nvim)
 (I'm going back and forth between emacs and nvim, and now this!?),
@@ -88,7 +83,6 @@ neo-minivimist/
 | | | | commentary.vim
 | | | | endwise.vim
 | | | | eunuch.vim
-| | | | flagship.vim
 | | | | netrw.lua
 | | | | repeat.vim
 | | | | speeddating.vim
